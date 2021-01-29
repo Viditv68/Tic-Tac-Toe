@@ -10,10 +10,7 @@ using TMPro;
 [Serializable]
 public class UIScreen
 {
-    public GameObject MainMenu;
-    public GameObject GameplayScreen;
-    public GameObject HighScoreScreen;
-
+    public GameObject[] screenPanel;
 }
 
 
@@ -31,6 +28,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject highScoreText;
 
+
     public Dictionary<int, GameObject> Screen;
 
     public UIScreen uiScreen;
@@ -47,22 +45,23 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         Screen = new Dictionary<int, GameObject>();
-        
-        Screen.Add(1, uiScreen.MainMenu);
-        Screen.Add(2, uiScreen.GameplayScreen);
-        Screen.Add(3, uiScreen.HighScoreScreen);
+
+        for(int i = 0; i < uiScreen.screenPanel.Length; i++)
+        {
+            Screen.Add(i, uiScreen.screenPanel[i]);
+        }
         
     }
 
     private void DisplayMainMenuScreen()
     {
         
-        OnAndOffScreen(3, 1);
+        OnAndOffScreen(2, 0);
     }
 
     private void DisplayHighscore()
     {
-        OnAndOffScreen(1, 3);
+        OnAndOffScreen(0, 2);
         highScoreText.GetComponent<TextMeshProUGUI>().SetText("HighScore: " + score.GetHighScore());
         highScoreText.SetActive(true);
     }
@@ -72,7 +71,7 @@ public class UIManager : MonoBehaviour
     private void StartGame()
     {
         
-        OnAndOffScreen(1, 2);
+        OnAndOffScreen(0, 1);
         
     }
 
