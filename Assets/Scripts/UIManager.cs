@@ -16,6 +16,11 @@ public class UIScreen
 
 public class UIManager : MonoBehaviour
 {
+
+    private int mainMenuScreen = 0;
+    private int gameplayScreen = 1;
+    private int highestScoreScreen = 2; 
+
     [SerializeField]
     private Score score;
     [SerializeField]
@@ -56,7 +61,7 @@ public class UIManager : MonoBehaviour
     private void DisplayMainMenuScreen()
     {
         
-        OnAndOffScreen(2, 0);
+        OnAndOffScreen(highestScoreScreen, mainMenuScreen);
     }
 
     private void DisplayHighscore()
@@ -71,7 +76,7 @@ public class UIManager : MonoBehaviour
     private void StartGame()
     {
         
-        OnAndOffScreen(0, 1);
+        OnAndOffScreen(mainMenuScreen, gameplayScreen);
         
     }
 
