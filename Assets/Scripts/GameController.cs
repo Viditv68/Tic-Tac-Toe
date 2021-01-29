@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     private int[] whichPlayerMarked;
+    [SerializeField]
+    private Score score;
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +53,11 @@ public class GameController : MonoBehaviour
             CheckWinner();
         }
 
+        if(turnCount >=9)
+        {
+            GameSetup();
+        }
+
         if(whoseTurn == 0)
         {
             whoseTurn = 1;
@@ -80,7 +87,11 @@ public class GameController : MonoBehaviour
             if(solutions[i] == 3 * (whoseTurn+1))
             {
                 Debug.Log("player" + whoseTurn + "wins");
-                gamefinished = true;
+                if(whoseTurn == 0)
+                {
+                    score.IncrementScore();
+                }
+                GameSetup();
                 return;
             }
         }
