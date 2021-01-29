@@ -11,6 +11,9 @@ public class GameController : MonoBehaviour
     public Sprite[] playIcons;
     public Button[] ticTacToeSpaces;
 
+    public bool gamefinished = false;
+
+    [SerializeField]
     private int[] whichPlayerMarked;
 
     // Start is called before the first frame update
@@ -28,10 +31,10 @@ public class GameController : MonoBehaviour
         {
             ticTacToeSpaces[i].interactable = true;
             ticTacToeSpaces[i].GetComponent<Image>().sprite = null;
-            whichPlayerMarked[i] = -1;
+            whichPlayerMarked[i] = -100;
         }
 
-
+        
     }
 
 
@@ -40,8 +43,13 @@ public class GameController : MonoBehaviour
         ticTacToeSpaces[index].image.sprite = playIcons[whoseTurn];
         ticTacToeSpaces[index].interactable = false;
 
-        whichPlayerMarked[index] = whoseTurn;
+        whichPlayerMarked[index] = whoseTurn+1;
+
         turnCount++;
+        if(turnCount > 4)
+        {
+            CheckWinner();
+        }
 
         if(whoseTurn == 0)
         {
@@ -51,5 +59,33 @@ public class GameController : MonoBehaviour
         {
             whoseTurn = 0;
         }
+
+    }
+
+    public void CheckWinner()
+    {
+        float s1 = whichPlayerMarked[0] + whichPlayerMarked[1] + whichPlayerMarked[2];
+        float s2 = whichPlayerMarked[3] + whichPlayerMarked[4] + whichPlayerMarked[5];
+        float s3 = whichPlayerMarked[6] + whichPlayerMarked[7] + whichPlayerMarked[8];
+        float s4 = whichPlayerMarked[0] + whichPlayerMarked[3] + whichPlayerMarked[6];
+        float s5 = whichPlayerMarked[1] + whichPlayerMarked[4] + whichPlayerMarked[7];
+        float s6 = whichPlayerMarked[2] + whichPlayerMarked[5] + whichPlayerMarked[8];
+        float s7 = whichPlayerMarked[0] + whichPlayerMarked[4] + whichPlayerMarked[8];
+        float s8 = whichPlayerMarked[0] + whichPlayerMarked[1] + whichPlayerMarked[6];
+
+        var solutions = new float[] { s1, s2, s3, s4, s5, s6, s7, s8 };
+
+        for(int i = 0; i < solutions.Length; i++)
+        {
+            if(solutions[i] == 3 * (whoseTurn+1))
+            {
+                Debug.Log("player" + whoseTurn + "wins");
+                gamefinished = true;
+                return;
+            }
+        }
+
+       
+
     }
 }
