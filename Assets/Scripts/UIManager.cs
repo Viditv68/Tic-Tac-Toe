@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Button playButton;
 
-    public Dictionary<string, GameObject> Screen;
+    public Dictionary<int, GameObject> Screen;
 
     public UIScreen uiScreen;
     private void Awake()
@@ -29,21 +29,21 @@ public class UIManager : MonoBehaviour
     }
     private void Start()
     {
-        Screen = new Dictionary<string, GameObject>();
+        Screen = new Dictionary<int, GameObject>();
         
-        Screen.Add("MainMenu", uiScreen.MainMenu);
-        Screen.Add("Gameplay", uiScreen.GameplayScreen);
+        Screen.Add(1, uiScreen.MainMenu);
+        Screen.Add(2, uiScreen.GameplayScreen);
     }
 
     private void StartGame()
     {
         GameObject obj = null;
 
-        if(Screen.TryGetValue("MainMenu", out obj))
+        if(Screen.TryGetValue(1, out obj))
         {
             obj.SetActive(false);
         }
-        if(Screen.TryGetValue("Gameplay", out obj))
+        if(Screen.TryGetValue(2, out obj))
         {
             obj.SetActive(true);
         }
