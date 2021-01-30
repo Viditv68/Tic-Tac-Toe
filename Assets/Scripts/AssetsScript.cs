@@ -11,23 +11,36 @@ public class AssetsScript : MonoBehaviour
     {
     }
 
-    public void GetAssets()
+    public string[] GetAssetsName()
     {
-        Debug.Log(Application.dataPath);
         string[] str = AssetDatabase.GetAllAssetPaths();
+        return str;
 
-        foreach(string s in str)
+        /*foreach(string s in str)
         {
             if(s.Contains("/Assets"))
             {
-                Debug.Log(AssetDatabase.AssetPathToGUID(s));
-
+                //Debug.Log(AssetDatabase.AssetPathToGUID(s));
+                Debug.Log(s);
                 Object[] obj = AssetDatabase.LoadAllAssetsAtPath(s);
-
-                EditorUtility.CollectDependencies(AssetDatabase.LoadAllAssetsAtPath(s));
+                
+              
 
             }
-        }
+        }*/
+    }
 
+    public int InstanceId(string s)
+    {
+        if(s.Contains("/Assets"))
+        {
+            Object[] obj = AssetDatabase.LoadAllAssetsAtPath(s);
+            
+            for(int i = 0; i < obj.Length; i++)
+            {
+                return obj[i].GetInstanceID();
+            }
+        }
+        return 0;
     }
 }
