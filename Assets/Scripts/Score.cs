@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class SaveHighScore
+public class HighScoreClass
 {
     public int highScore;
 }
@@ -13,6 +13,8 @@ public class Score : MonoBehaviour
 {
     private int currentScore = 0;
     private int highestScore = 0;
+
+    string fileName = "/Score.txt";
 
     public void IncrementScore()
     {
@@ -30,20 +32,20 @@ public class Score : MonoBehaviour
 
     private void SaveHighScoreinJson()
     {
-        SaveHighScore s = new SaveHighScore();
+        HighScoreClass s = new HighScoreClass();
         s.highScore = highestScore;
         string json = JsonUtility.ToJson(s);
-        File.WriteAllText(Application.dataPath + "/saveScore.txt", json);
+        File.WriteAllText(Application.dataPath + fileName, json);
         Debug.Log(json);
     }
 
     public int GetHighScore()
     {
-        if(File.Exists(Application.dataPath + "/saveScore.txt"))
+        if(File.Exists(Application.dataPath + fileName))
         {
-            string saveString = File.ReadAllText(Application.dataPath + "/saveScore.txt");
+            string saveString = File.ReadAllText(Application.dataPath + fileName);
 
-            SaveHighScore s = JsonUtility.FromJson<SaveHighScore>(saveString);
+            HighScoreClass s = JsonUtility.FromJson<HighScoreClass>(saveString);
 
             return s.highScore;
 

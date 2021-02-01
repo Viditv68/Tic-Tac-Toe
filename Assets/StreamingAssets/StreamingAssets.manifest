@@ -1,0 +1,10 @@
+ManifestFileVersion: 0
+CRC: 1004529353
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: backgroundasset
+      Dependencies: {}
+    Info_1:
+      Name: mynewbundle
+      Dependencies: {}
