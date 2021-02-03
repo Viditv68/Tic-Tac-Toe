@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,10 +16,6 @@ public class UIScreen
 public class UIManager : MonoBehaviour
 {
 
-    private int mainMenuScreen = 0;
-    private int gameplayScreen = 1;
-    private int highestScoreScreen = 2; 
-
     [SerializeField]
     private Score score;
     [SerializeField]
@@ -33,6 +28,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject highScoreText;
 
+    [SerializeField]
+    private TMP_Dropdown dropDown;
+
 
     public Dictionary<int, GameObject> Screen;
 
@@ -42,10 +40,10 @@ public class UIManager : MonoBehaviour
         playButton.onClick.AddListener(StartGame);
         HighestScoreButton.onClick.AddListener(DisplayHighscore);
         backButton.onClick.AddListener(DisplayMainMenuScreen);
+
+        dropDown.onValueChanged.AddListener(delegate { Themes.Instance.SetTheme(dropDown.options[dropDown.value].text); });
         
     }
-
-    
 
     private void Start()
     {
@@ -61,12 +59,12 @@ public class UIManager : MonoBehaviour
     private void DisplayMainMenuScreen()
     {
         
-        OnAndOffScreen(highestScoreScreen, mainMenuScreen);
+        OnAndOffScreen((int)ScreenStatus.HighScore, (int)ScreenStatus.MainMenu);
     }
 
     private void DisplayHighscore()
     {
-        OnAndOffScreen(0, 2);
+        OnAndOffScreen((int)ScreenStatus.MainMenu, (int)ScreenStatus.HighScore);
         highScoreText.GetComponent<TextMeshProUGUI>().SetText("HighScore: " + score.GetHighScore());
         highScoreText.SetActive(true);
     }
@@ -76,7 +74,7 @@ public class UIManager : MonoBehaviour
     private void StartGame()
     {
         
-        OnAndOffScreen(mainMenuScreen, gameplayScreen);
+        OnAndOffScreen((int)ScreenStatus.MainMenu, (int)ScreenStatus.Gameplay);
         
     }
 
